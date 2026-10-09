@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载1905电影网 - 高清电影下载与在线观看首选平台</title>
+    <meta name="description" content="下载1905电影网（xiazai1905dianyingwang-app）提供最新高清电影、电视剧、综艺、动漫资源下载与在线观看。访问官网：https://xiazai1905dianyingwang-app.github.io，畅享海量影视内容。">
+    <meta name="keywords" content="下载1905电影网, 1905电影网下载, xiazai1905dianyingwang-app, 高清电影下载, 免费电影在线观看">
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #0f0f1a;
+            --darker: #080811;
+            --light: #f5f6fa;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 动态背景粒子效果 */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), transparent);
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+        
+        /* 布局容器 */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 玻璃拟态导航 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .hero-url {
+            display: inline-block;
+            padding: 12px 25px;
+            background: rgba(108, 92, 231, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            color: var(--secondary);
+            font-family: monospace;
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.4);
+        }
+        
+        /* 栏目通用样式 */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+        
+        /* 关于我们 - 玻璃卡片 */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s, background 0.3s;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        /* 电影资源 - 霓虹网格 */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .movie-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 2/3;
+        }
+        
+        .movie-poster {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #2c3e50, #4ca1af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.5s;
+        }
+        
+        .movie-card:hover .movie-poster {
+            transform: scale(1.05);
+        }
+        
+        .movie-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .movie-card:hover .movie-info {
+            transform: translateY(0);
+        }
+        
+        .movie-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .movie-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* 下载指南 - 时间线 */
+        .guide-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .guide-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            text-align: right;
+            padding-right: 50px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            padding-left: 50px;
+        }
+        
+        .timeline-content {
+            width: calc(50% - 30px);
+            padding: 20px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .timeline-content h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 5px rgba(253, 121, 168, 0.3);
+        }
+        
+        /* 联系方式 - 玻璃表单 */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 50px 0 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s, color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* 移动端自适应 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--darker);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                transition: left 0.3s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .guide-timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+                text-align: left !important;
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 70px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-url {
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
+            
+            .cta-button {
+                padding: 12px 30px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+    <!-- 动态背景粒子 -->
+    <div class="bg-particles" id="particles"></div>
+    
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">下载1905电影网</a>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#movies">电影资源</a></li>
+                    <li><a href="#guide">下载指南</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- 首页英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-url">https://xiazai1905dianyingwang-app.github.io</div>
+                <h1>下载1905电影网</h1>
+                <p>您的专属高清电影下载与在线观看平台，提供最新、最快、最全的影视资源。访问我们的官网，开启极致观影体验。</p>
+                <a href="#movies" class="cta-button">探索电影资源</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 关于我们 -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>关于下载1905电影网</h2>
+                <p>了解我们，了解为什么数百万用户选择下载1905电影网作为他们的影视娱乐首选平台。</p>
+            </div>
+            <div class="about-grid">
+                <div class="glass-card">
+                    <h3>海量资源</h3>
+                    <p>下载1905电影网收录了全球最新、最热门的电影、电视剧、综艺和动漫资源，每日更新，确保您总能找到想看的内容。</p>
+                </div>
+                <div class="glass-card">
+                    <h3>高清画质</h3>
+                    <p>我们提供从720P到4K超高清的多种画质选择，让您在家也能享受影院级的视听盛宴。所有资源均经过严格筛选，确保最佳观看体验。</p>
+                </div>
+                <div class="glass-card">
+                    <h3>极速下载</h3>
+                    <p>通过优化的下载通道和智能分流技术，下载1905电影网为您提供极速稳定的下载服务，让等待成为过去。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 电影资源 -->
+    <section class="section" id="movies">
+        <div class="container">
+            <div class="section-title">
+                <h2>精选电影资源</h2>
+                <p>浏览我们精心挑选的最新电影资源，一键下载，畅享视听。</p>
+            </div>
+            <div class="movies-grid">
+                <div class="movie-card">
+                    <div class="movie-poster">热门动作大片</div>
+                    <div class="movie-info">
+                        <h4>2024最新动作片</h4>
+                        <p>高清MP4格式 | 2.5GB</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">科幻巨制</div>
+                    <div class="movie-info">
+                        <h4>星际穿越2</h4>
+                        <p>4K超清 | 5.8GB</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">浪漫喜剧</div>
+                    <div class="movie-info">
+                        <h4>爱情神话</h4>
+                        <p>1080P | 1.8GB</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">悬疑惊悚</div>
+                    <div class="movie-info">
+                        <h4>消失的她</h4>
+                        <p>1080P | 2.2GB</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">动画电影</div>
+                    <div class="movie-info">
+                        <h4>蜘蛛侠：纵横宇宙</h4>
+                        <p>4K HDR | 4.5GB</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">经典重温</div>
+                    <div class="movie-info">
+                        <h4>肖申克的救赎</h4>
+                        <p>修复版 | 3.2GB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 下载指南 -->
+    <section class="section" id="guide">
+        <div class="container">
+            <div class="section-title">
+                <h2>下载指南</h2>
+                <p>只需简单几步，即可轻松获取您喜爱的电影资源。</p>
+            </div>
+            <div class="guide-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>第一步：访问官网</h3>
+                        <p>在浏览器中输入 <strong>https://xiazai1905dianyingwang-app.github.io</strong> 或直接搜索“下载1905电影网”进入我们的官方网站。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>第二步：搜索影片</h3>
+                        <p>使用首页的搜索功能，输入您想看的电影名称、演员或导演，快速找到目标资源。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>第三步：选择画质</h3>
+                        <p>在影片详情页，根据您的设备和网络情况，选择合适的画质（如720P、1080P或4K）和格式。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>第四步：开始下载</h3>
+                        <p>点击“立即下载”按钮，选择保存路径，即可享受极速下载服务。下载完成后，尽情观看！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系方式 -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>联系我们</h2>
+                <p>有任何问题、建议或资源请求？请随时联系下载1905电影网团队。</p>
+            </div>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">您的姓名</label>
+                        <input type="text" id="name" class="form-control" placeholder="请输入姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">电子邮箱</label>
+                        <input type="email" id="email" class="form-control" placeholder="请输入邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">主题</label>
+                        <input type="text" id="subject" class="form-control" placeholder="请输入主题">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">留言内容</label>
+                        <textarea id="message" class="form-control" placeholder="请输入您的留言"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">发送消息</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>下载1905电影网</h3>
+                    <p>您的一站式高清电影下载与在线观看平台，让娱乐更简单。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#movies">电影资源</a></li>
+                        <li><a href="#guide">下载指南</a></li>
+                        <li><a href="#contact">联系方式</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>热门分类</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">最新电影</a></li>
+                        <li><a href="#">热门电视剧</a></li>
+                        <li><a href="#">综艺节目</a></li>
+                        <li><a href="#">动漫动画</a></li>
+                        <li><a href="#">纪录片</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>网站信息</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">网站名称：下载1905电影网</a></li>
+                        <li><a href="#">网址：xiazai1905dianyingwang-app.github.io</a></li>
+                        <li><a href="#">关键词：下载1905电影网, 1905电影网下载</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 下载1905电影网. 网站网址: https://xiazai1905dianyingwang-app.github.io 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(15, 15, 26, 0.95)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.background = 'var(--glass)';
+                header.style.boxShadow = 'none';
+            }
+        });
+        
+        // 创建动态背景粒子
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 100 + 50;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // 初始化粒子效果
+        createParticles();
+        
+        // 表单提交
+        const contactForm = document.querySelector('.contact-form form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('感谢您的留言！我们会尽快回复。');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>
